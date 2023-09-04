@@ -1,10 +1,15 @@
-<script lang="ts" default>
+<script lang="ts" setup>
 import { useAuthStore } from "~/stores/useAuthStore"
 
 const auth = useAuthStore()
+
+async function handleLogout() {
+    await auth.logout();
+}
 </script>
 <template>
     <div>
+        <button type="button" v-if="auth.isLoggedIn" @click.prevent="handleLogout">logout</button>
         <pre>
             {{ auth.user }}
         </pre>

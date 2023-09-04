@@ -17,6 +17,12 @@ export const useAuthStore = defineStore("auth", () => {
 
     const isLoggedIn = computed(() => !!user.value)
 
+    async function logout() {
+        await useApiFetch("/logout", {method: "POST"});
+        user.value = null;
+        navigateTo("/login");
+    }
+
     async function fetchUser() {
         const {data} = await useApiFetch("/api/user")
         user.value = data.value as User
@@ -34,5 +40,5 @@ export const useAuthStore = defineStore("auth", () => {
         return login
     }
 
-    return {user, login, isLoggedIn, fetchUser}
+    return {user, login, isLoggedIn, fetchUser, logout}
 })
